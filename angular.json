@@ -164,6 +164,46 @@
           }
         }
       }
+    },
+    "accounts-management": {
+      "projectType": "library",
+      "root": "projects/accounts-management",
+      "sourceRoot": "projects/accounts-management/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/accounts-management/tsconfig.lib.json",
+            "project": "projects/accounts-management/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/accounts-management/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/accounts-management/src/test.ts",
+            "tsConfig": "projects/accounts-management/tsconfig.spec.json",
+            "karmaConfig": "projects/accounts-management/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/accounts-management/tsconfig.lib.json",
+              "projects/accounts-management/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "technest-test"

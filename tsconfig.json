@@ -18,6 +18,9 @@
     "paths": {
       "@technest/security": [
         "projects/security/src/public-api"
+      ],
+      "@technest/accounts-management": [
+        "projects/accounts-management/src/public-api"
       ]
     }
   },
