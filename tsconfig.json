@@ -16,9 +16,8 @@
       "dom"
     ],
     "paths": {
-      "security": [
-        "dist/security/security",
-        "dist/security"
+      "@technest/security": [
+        "projects/security/src/public-api"
       ]
     }
   },

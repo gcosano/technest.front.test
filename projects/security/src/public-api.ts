@@ -2,6 +2,8 @@
  * Public API Surface of security
  */
 
-export * from './lib/security.service';
-export * from './lib/security.component';
+export * from './lib/auth.guard';
+export * from './lib/components/login/login.component';
+export * from './lib/security-routing.module';
 export * from './lib/security.module';
+export * from './lib/security.service';
