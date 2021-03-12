@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountManagementeService } from '../../accounts-management.service';
 
 @Component({
   selector: 'technest-accounts-list',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountsListComponent implements OnInit {
 
-  constructor() { }
+  constructor(public accountManagementeService: AccountManagementeService) { }
 
   ngOnInit(): void {
+    this.accountManagementeService.receiveChat().subscribe(console.log, console.error);
   }
 
 }
