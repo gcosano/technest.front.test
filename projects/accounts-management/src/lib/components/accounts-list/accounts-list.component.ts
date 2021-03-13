@@ -12,16 +12,15 @@ import { Account } from '../../models/account.model';
 export class AccountsListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'category', 'tag', 'balance', 'availableBalance'];
-
-  accounts$: Observable<Array<Account>>;
+  accountsList: Account[] = [];
   exchangeRate$: Observable<number>;
 
   constructor(private accountSrv: AccountManagementeService) { }
 
   ngOnInit(): void {
-    this.accounts$ = this.accountSrv.retrieveAllAccounts().pipe(
-      catchError(() => of([]))
-    );
+    this.accountSrv.retrieveAllAccounts();
+
+    this.accountSrv.accounts$.subscribe(accounts => (this.accountsList = accounts), console.error);
       
     this.exchangeRate$ = this.accountSrv.onExchangeRateStream().pipe(
       catchError(() => of(1))

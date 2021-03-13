@@ -20,5 +20,10 @@ export class ApiLibService {
     const url = `${environment.baseUrl}/${type}`;
     return this.http.get(url).pipe(catchError(err => throwError(err)));
   }
+  
+  updateElement(type: string, id: string, payload: Object): Observable<any> {
+    const url = `${environment.baseUrl}/${type}/${id}`;
+    return this.http.patch(url, payload).pipe(catchError(err => throwError(err)));
+  }
 
 }

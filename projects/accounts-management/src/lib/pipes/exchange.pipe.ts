@@ -6,6 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'exchange'})
 export class ExchangePipe implements PipeTransform {
   transform(value: number, exchangeRate?: number): number {
-    return value*exchangeRate;
+    return value*(!isNaN(exchangeRate) ? exchangeRate : 1);
   }
 }
