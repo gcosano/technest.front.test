@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  clientID: '756567647952-ek2gc1s7po1o22qgp9gkac0281asji7s.apps.googleusercontent.com',
-  secretID: 'KrLotbwKLi5hQtrU7H3sK0ok'
+  clientID: '913035801727-5ii9nmpsqb8pbbhj1sfl4fhav1hqqfcs.apps.googleusercontent.com',
+  secretID: 'Py-Ufv9jyIUCXrHvGswlm8cF',
+  wssUrl: 'ws://localhost:3000',
+  baseUrl: 'http://localhost:3000'
 };
