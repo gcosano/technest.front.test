@@ -8,9 +8,10 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ExchangePipe } from './pipes/exchange.pipe';
 
 @NgModule({
-  declarations: [AccountsListComponent],
+  declarations: [AccountsListComponent, ExchangePipe],
   imports: [
     CommonModule,
     AccountsManagementRoutingModule,

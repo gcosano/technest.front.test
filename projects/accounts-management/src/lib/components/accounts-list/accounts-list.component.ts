@@ -14,13 +14,17 @@ export class AccountsListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'category', 'tag', 'balance', 'availableBalance'];
 
   accounts$: Observable<Array<Account>>;
+  exchangeRate$: Observable<number>;
 
   constructor(private accountSrv: AccountManagementeService) { }
 
   ngOnInit(): void {
     this.accounts$ = this.accountSrv.retrieveAllAccounts().pipe(
-      tap(console.warn),
       catchError(() => of([]))
+    );
+      
+    this.exchangeRate$ = this.accountSrv.onExchangeRateStream().pipe(
+      catchError(() => of(1))
     );
   }
 

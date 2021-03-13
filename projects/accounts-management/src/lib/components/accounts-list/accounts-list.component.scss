@@ -76,6 +76,26 @@
            .mat-header-cell {
                color: var(--primary-color);
            }
+
+           .amount-info {
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+               align-items: flex-end;
+               padding: .5em 0;
+
+               span {
+                   font-size: 12px;
+               }
+           }
+
+           .mat-column-balance {
+               text-align: right;
+           }
+
+           .mat-column-availableBalance {
+               text-align: right;
+           }
         }
     }
 }
