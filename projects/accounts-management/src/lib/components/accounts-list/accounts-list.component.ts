@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AccountManagementeService } from '../../accounts-management.service';
 import { Account } from '../../models/account.model';
 
@@ -9,22 +10,37 @@ import { Account } from '../../models/account.model';
   templateUrl: './accounts-list.component.html',
   styleUrls: ['./accounts-list.component.scss']
 })
-export class AccountsListComponent implements OnInit {
+export class AccountsListComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['name', 'category', 'tag', 'balance', 'availableBalance'];
   accountsList: Account[] = [];
-  exchangeRate$: Observable<number>;
+  exchangeRate: number;
+  private _stop$: Subject<boolean> = new Subject();
 
-  constructor(private accountSrv: AccountManagementeService) { }
+  constructor(private accountSrv: AccountManagementeService, private router: Router) { }
 
   ngOnInit(): void {
+    this.accountSrv.onExchangeRateStream();
     this.accountSrv.retrieveAllAccounts();
 
-    this.accountSrv.accounts$.subscribe(accounts => (this.accountsList = accounts), console.error);
-      
-    this.exchangeRate$ = this.accountSrv.onExchangeRateStream().pipe(
-      catchError(() => of(1))
+    this.accountSrv.accounts$.pipe(takeUntil(this._stop$)).subscribe(
+      accounts => (this.accountsList = accounts), 
+      console.error
     );
+      
+    this.accountSrv.exchangeRate$.pipe(takeUntil(this._stop$)).subscribe(
+      exchangeRate => (this.exchangeRate = exchangeRate), 
+      console.error
+    );
+  }o
+
+  ngOnDestroy(): void {
+    this._stop$.next();
+    this._stop$.complete();
+  }
+
+  onShowDetail(id: string) {
+    this.router.navigateByUrl(`/accounts/${id}`);
   }
 
 }

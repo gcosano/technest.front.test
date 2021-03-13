@@ -12,6 +12,8 @@ export class ChangeHighlightPipe implements PipeTransform {
   transform(value: number): number {
     if (!isNaN(this._currentValue) && value !== this._currentValue) {
       this.ref.nativeElement.parentNode.style.color = (value > this._currentValue) ? 'green' : 'red';
+    } else {
+      this.ref.nativeElement.parentNode.style.color = 'black';
     }
 
     this._currentValue = value;
