@@ -10,9 +10,15 @@ import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ExchangePipe } from './pipes/exchange.pipe';
 import { ChangeHighlightPipe } from './pipes/change-highligh.pipe';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 
 @NgModule({
-  declarations: [AccountsListComponent, ExchangePipe, ChangeHighlightPipe],
+  declarations: [
+    AccountsListComponent,
+    AccountDetailComponent,
+    ExchangePipe,
+    ChangeHighlightPipe
+  ],
   imports: [
     CommonModule,
     AccountsManagementRoutingModule,
@@ -21,7 +27,7 @@ import { ChangeHighlightPipe } from './pipes/change-highligh.pipe';
     MatTableModule,
     MatPaginatorModule
   ],
-  exports: [AccountsListComponent],
+  exports: [AccountsListComponent, AccountDetailComponent],
   providers: [AccountManagementeService]
 })
 export class AccountsManagementModule { }

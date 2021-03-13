@@ -12,6 +12,7 @@ export class AccountManagementeService implements OnDestroy {
 
   private _stop$: Subject<boolean> = new Subject();
   public accounts$: ReplaySubject<Account[]> = new ReplaySubject(1);
+  public exchangeRate$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(private apiService: ApiLibService) { 
 
@@ -34,16 +35,22 @@ export class AccountManagementeService implements OnDestroy {
       }, 
       console.error
     );
-
+    
   }
 
   ngOnDestroy(): void {
-    this._stop$.next();
     this._stop$.complete();
+    this.accounts$.complete();
+    this.exchangeRate$.complete();
   }
 
-  onExchangeRateStream(): Observable<number> {
-    return this.apiService.getExchangeRateStream();
+  onExchangeRateStream(): void {
+    this.apiService.getExchangeRateStream().pipe(
+      catchError(() => of(0))
+    ).subscribe(
+      exchangeRate => this.exchangeRate$.next(exchangeRate),
+      console.error
+    );
   }
 
   retrieveAllAccounts(): void {
