@@ -2,8 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 
 import { ApiLibService } from '@technest/api-lib';
 
-import { interval, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { catchError, filter, takeUntil } from 'rxjs/operators';
+import { combineLatest, interval, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { catchError, filter, map, takeUntil } from 'rxjs/operators';
 
 import { Account } from './models/account.model';
 
@@ -11,16 +11,17 @@ import { Account } from './models/account.model';
 export class AccountManagementeService implements OnDestroy {
 
   private _stop$: Subject<boolean> = new Subject();
-  private _accountsList: Account[] = [];
   public accounts$: ReplaySubject<Account[]> = new ReplaySubject(1);
 
   constructor(private apiService: ApiLibService) { 
-    interval(15000).pipe(
+
+    combineLatest([interval(40000), this.accounts$]).pipe(
       takeUntil(this._stop$),
-      filter(() => !!this._accountsList.length)
+      map<[number, Account[]], Account[]>(([_, data]) => data),
+      filter(accounts => !!accounts.length)
     ).subscribe(
-      () => {
-        for (const [i, account] of this._accountsList.entries()) {
+      accounts => {
+        for (const account of accounts) {
           const newBalance = (Math.random() * 120);
           const payload = {
             balance: newBalance,
@@ -30,10 +31,9 @@ export class AccountManagementeService implements OnDestroy {
           this.apiService.updateElement('accounts', account.id, payload)
             .subscribe(updatedAccount => Object.assign(account, updatedAccount), console.error);
         }
-
       }, 
       console.error
-    )
+    );
 
   }
 
@@ -50,10 +50,7 @@ export class AccountManagementeService implements OnDestroy {
     this.apiService.getAllElements('accounts').pipe(
       catchError(() => of([]))
     ).subscribe(
-      accounts => {
-        this._accountsList = accounts;
-        this.accounts$.next(this._accountsList);
-      }, 
+      accounts => this.accounts$.next(accounts), 
       console.error
     );
   }
