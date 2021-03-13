@@ -1,16 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Injectable, OnDestroy } from '@angular/core';
+import { ApiLibService } from '@technest/api-lib';
+import { Observable, Subject } from 'rxjs';
+import { Account } from './models/account.model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AccountManagementeService {
+@Injectable()
+export class AccountManagementeService implements OnDestroy {
 
-  constructor(private socket: Socket) { 
+  private _stop$: Subject<boolean> = new Subject();
+
+  constructor(private apiService: ApiLibService) { 
   }
 
-  receiveChat(){
-    return this.socket.fromEvent('exchange-rate');
+  ngOnDestroy(): void {
+    this._stop$.next();
+    this._stop$.complete();
   }
 
+  onExchangeRateStream(): Observable<number> {
+    return this.apiService.getExchangeRateStream();
+  }
+
+  retrieveAllAccounts(): Observable<Account[]> {
+    return this.apiService.getAllElements('accounts');
+  }
+  
 }

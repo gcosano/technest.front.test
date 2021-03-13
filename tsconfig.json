@@ -21,6 +21,9 @@
       ],
       "@technest/accounts-management": [
         "projects/accounts-management/src/public-api"
+      ],
+      "@technest/api-lib": [
+        "projects/api-lib/src/public-api"
       ]
     }
   },
