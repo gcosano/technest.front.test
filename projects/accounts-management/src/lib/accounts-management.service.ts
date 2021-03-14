@@ -8,7 +8,7 @@ import { catchError, filter, map, takeUntil } from 'rxjs/operators';
 import { Account } from './models/account.model';
 
 @Injectable()
-export class AccountManagementeService implements OnDestroy {
+export class AccountsManagementService implements OnDestroy {
 
   private _stop$: Subject<boolean> = new Subject();
   public accounts$: ReplaySubject<Account[]> = new ReplaySubject(1);

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { AccountManagementeService } from '../../accounts-management.service';
+import { AccountsManagementService } from '../../accounts-management.service';
 import { Account } from '../../models/account.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
   exchangeRate: number;
   private _stop$: Subject<boolean> = new Subject(); 
   
-  constructor(private accountSrv: AccountManagementeService, private route: ActivatedRoute) {
+  constructor(private accountSrv: AccountsManagementService, private route: ActivatedRoute) {
   }
   
   ngOnInit(): void {

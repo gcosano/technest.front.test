@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AccountManagementeService } from '../../accounts-management.service';
+import { AccountsManagementService } from '../../accounts-management.service';
 import { Account } from '../../models/account.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class AccountsListComponent implements OnInit, OnDestroy {
   exchangeRate: number;
   private _stop$: Subject<boolean> = new Subject();
 
-  constructor(private accountSrv: AccountManagementeService, private router: Router) { }
+  constructor(private accountSrv: AccountsManagementService, private router: Router) { }
 
   ngOnInit(): void {
     this.accountSrv.accounts$.pipe(takeUntil(this._stop$)).subscribe(
