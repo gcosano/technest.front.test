@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@technest/security": [
+        "projects/security/src/public-api"
+      ],
+      "@technest/accounts-management": [
+        "projects/accounts-management/src/public-api"
+      ],
+      "@technest/api-lib": [
+        "projects/api-lib/src/public-api"
+      ],
+      "@technest/technest-app-lib": [
+        "projects/technest-app-lib/src/public-api"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}
