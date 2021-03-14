@@ -24,6 +24,9 @@
       ],
       "@technest/api-lib": [
         "projects/api-lib/src/public-api"
+      ],
+      "@technest/technest-app-lib": [
+        "projects/technest-app-lib/src/public-api"
       ]
     }
   },

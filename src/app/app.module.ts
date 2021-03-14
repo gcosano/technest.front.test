@@ -1,16 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ApiLibModule } from '@technest/api-lib';
-import { SecurityModule } from '@technest/security';
-
-import { environment } from './../environments/environment';
+import { TechnestAppLibModule } from '@technest/technest-app-lib';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -20,9 +15,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
-    HttpClientModule,
-    SecurityModule.forRoot(environment.clientID),
-    ApiLibModule,
+    TechnestAppLibModule,
     AppRoutingModule
   ],
   bootstrap: [AppComponent]
