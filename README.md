@@ -44,6 +44,7 @@ Main library of this test. It contains the views for show a given list or a spec
 Comments: 
 > Highlighting a complete row of a color overloaded the design, instead of it, I decided to add some pipes to "complicate a bit" and apply it on certain columns. 
 I also hope it provides versatility.
+
 > I made the service singleton to provide the same resources and use the same address memory of the elements listed throught the subjects.
 
 ### Technest App Lib
