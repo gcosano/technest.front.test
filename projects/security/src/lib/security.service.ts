@@ -48,7 +48,7 @@ export class SecurityService {
       // Exp. time is given in secs to operates we parse actual time from millis to secs
       map<number, number>(expTime => (expTime - Math.floor(new Date().getTime() / 1000))),
       // Google set token expiration time in 1 hour, we reduce until 5 minutes his validity
-      map<number, boolean>(result => (result > 0))
+      map<number, boolean>(result => (result > 3300))
       // map<number, boolean>(result => (result > 3300))
     );
   }

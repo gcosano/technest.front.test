@@ -1,3 +1,5 @@
+import { Order } from "./order.model";
+
 export interface Account {
     id: string;
     name: string;
@@ -5,5 +7,5 @@ export interface Account {
     tag?: string;
     balance?: number;
     availableBalance?: number;
-    ordersList?: Array<unknown>;
+    ordersList?: Array<Order>;
 }

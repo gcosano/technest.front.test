@@ -4,3 +4,4 @@
 
 export * from './lib/api-lib.service';
 export * from './lib/api-lib.module';
+export * from './lib/models/server-config.model';

@@ -1,14 +1,24 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+
+import { Account, Order } from '@technest/accounts-management';
+
 import { Socket } from 'ngx-socket-io';
+
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+
+import { SERVER_CONFIG } from './config/tokens.config';
+import { ServerConfig } from './models/server-config.model';
 
 @Injectable()
 export class ApiLibService {
 
-  constructor(private socket: Socket, private http: HttpClient) { 
+  constructor(
+    @Inject(SERVER_CONFIG) private serverConfig: ServerConfig,
+    private socket: Socket,
+    private http: HttpClient
+  ) { 
     
   }
 
@@ -16,14 +26,22 @@ export class ApiLibService {
     return this.socket.fromEvent('exchange-rate');
   }
 
-  getAllElements(type: string): Observable<any>{
-    const url = `${environment.baseUrl}/${type}`;
-    return this.http.get(url).pipe(catchError(err => throwError(err)));
+  getAllElements(type: string): Observable<(Account | Order)[]>{
+    if (!this.serverConfig?.restBaseUrl) {
+      throw new Error('Rest config is not provided!');
+    }
+
+    const url = `${this.serverConfig.restBaseUrl}/${type}`;
+    return this.http.get<(Account | Order)[]>(url).pipe(catchError(err => throwError(err)));
   }
   
-  updateElement(type: string, id: string, payload: Object): Observable<any> {
-    const url = `${environment.baseUrl}/${type}/${id}`;
-    return this.http.patch(url, payload).pipe(catchError(err => throwError(err)));
+  updateElement(type: string, id: string, payload: Object): Observable<Account | Order> {
+    if (!this.serverConfig?.restBaseUrl) {
+      throw new Error('Rest config is not provided!');
+    }
+
+    const url = `${this.serverConfig.restBaseUrl}/${type}/${id}`;
+    return this.http.patch<Account | Order>(url, payload).pipe(catchError(err => throwError(err)));
   }
 
 }
