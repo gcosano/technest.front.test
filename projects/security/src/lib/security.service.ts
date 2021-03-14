@@ -15,7 +15,7 @@ export class SecurityService {
 
   /**
    * Method to sign in with google API
-   * @param navUrl - (optional) route's url to navigate if process has been succesfully completed
+   * @param navUrl route's url to navigate if process has been succesfully completed
    */
   public signInWithGoogle(navUrl: string) {
     this._authService.signIn(GoogleLoginProvider.PROVIDER_ID)
@@ -49,7 +49,6 @@ export class SecurityService {
       map<number, number>(expTime => (expTime - Math.floor(new Date().getTime() / 1000))),
       // Google set token expiration time in 1 hour, we reduce until 5 minutes his validity
       map<number, boolean>(result => (result > 3300))
-      // map<number, boolean>(result => (result > 3300))
     );
   }
 
