@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { AccountManagementeService } from '../../accounts-management.service';
 import { Account } from '../../models/account.model';
 
@@ -20,16 +22,13 @@ export class AccountsListComponent implements OnInit, OnDestroy {
   constructor(private accountSrv: AccountManagementeService, private router: Router) { }
 
   ngOnInit(): void {
-    this.accountSrv.onExchangeRateStream();
-    this.accountSrv.retrieveAllAccounts();
-
     this.accountSrv.accounts$.pipe(takeUntil(this._stop$)).subscribe(
-      accounts => (this.accountsList = accounts), 
+      (accounts: Account[]) => (this.accountsList = accounts), 
       console.error
     );
       
     this.accountSrv.exchangeRate$.pipe(takeUntil(this._stop$)).subscribe(
-      exchangeRate => (this.exchangeRate = exchangeRate), 
+      (exchangeRate: number) => (this.exchangeRate = exchangeRate), 
       console.error
     );
   }o

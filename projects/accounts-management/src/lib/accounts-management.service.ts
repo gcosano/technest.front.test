@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 
 import { ApiLibService } from '@technest/api-lib';
 
-import { combineLatest, interval, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { combineLatest, interval, of, ReplaySubject, Subject } from 'rxjs';
 import { catchError, filter, map, takeUntil } from 'rxjs/operators';
 
 import { Account } from './models/account.model';
@@ -15,13 +15,15 @@ export class AccountManagementeService implements OnDestroy {
   public exchangeRate$: ReplaySubject<number> = new ReplaySubject(1);
 
   constructor(private apiService: ApiLibService) { 
+    this.onExchangeRateStream();
+    this.retrieveAllAccounts();
 
     combineLatest([interval(40000), this.accounts$]).pipe(
       takeUntil(this._stop$),
       map<[number, Account[]], Account[]>(([_, data]) => data),
       filter(accounts => !!accounts.length)
     ).subscribe(
-      accounts => {
+      (accounts: Account[]) => {
         for (const account of accounts) {
           const newBalance = (Math.random() * 120);
           const payload = {
@@ -57,7 +59,7 @@ export class AccountManagementeService implements OnDestroy {
     this.apiService.getAllElements('accounts').pipe(
       catchError(() => of([]))
     ).subscribe(
-      accounts => this.accounts$.next(accounts), 
+      (accounts: Account[]) => this.accounts$.next(accounts), 
       console.error
     );
   }

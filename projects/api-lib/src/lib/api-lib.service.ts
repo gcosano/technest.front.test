@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 
+import { Account, Order } from '@technest/accounts-management';
+
 import { Socket } from 'ngx-socket-io';
 
 import { Observable, throwError } from 'rxjs';
@@ -24,22 +26,22 @@ export class ApiLibService {
     return this.socket.fromEvent('exchange-rate');
   }
 
-  getAllElements(type: string): Observable<any>{
+  getAllElements(type: string): Observable<(Account | Order)[]>{
     if (!this.serverConfig?.restBaseUrl) {
       throw new Error('Rest config is not provided!');
     }
 
     const url = `${this.serverConfig.restBaseUrl}/${type}`;
-    return this.http.get(url).pipe(catchError(err => throwError(err)));
+    return this.http.get<(Account | Order)[]>(url).pipe(catchError(err => throwError(err)));
   }
   
-  updateElement(type: string, id: string, payload: Object): Observable<any> {
+  updateElement(type: string, id: string, payload: Object): Observable<Account | Order> {
     if (!this.serverConfig?.restBaseUrl) {
       throw new Error('Rest config is not provided!');
     }
 
     const url = `${this.serverConfig.restBaseUrl}/${type}/${id}`;
-    return this.http.patch(url, payload).pipe(catchError(err => throwError(err)));
+    return this.http.patch<Account | Order>(url, payload).pipe(catchError(err => throwError(err)));
   }
 
 }
